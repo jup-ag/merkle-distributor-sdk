@@ -31,7 +31,7 @@ export class MerkleDistributor {
     },
   ) {
     this.mdProgram = createMerkleDistributorProgram(this.provider, MERKLE_DISTRIBUTOR_PROGRAM_ID);
-    this.mint = new web3.PublicKey(options.targetToken);
+    this.mint = options.targetToken;
     this.claimProofEndpoint = options.claimProofEndpoint;
   }
 
@@ -40,7 +40,7 @@ export class MerkleDistributor {
       return this.user;
     }
     try {
-      const res = await fetch(`${this.claimProofEndpoint}/${this.mint}/${claimant.toBase58()}`);
+      const res = await fetch(`${this.claimProofEndpoint}/${this.mint.toBase58()}/${claimant.toBase58()}`);
 
       if (!res.ok) {
         return null;
