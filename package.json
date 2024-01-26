@@ -1,0 +1,36 @@
+{
+  "name": "@jup-ag/merkle-distributor-sdk",
+  "version": "0.0.1",
+  "description": "Mercurial Vault SDK is a typescript library that allows you to interact with Mercurial v2's vault.",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "scripts": {
+    "build": "rm -rf dist && tsc -p tsconfig.build.json && tsc -p tsconfig.esm.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [],
+  "author": "mercurial-finance",
+  "license": "MIT",
+  "dependencies": {
+    "@coral-xyz/anchor": "^0.29.0",
+    "@solana/spl-token": "0.1.8",
+    "@solana/web3.js": "~1.87.6"
+  },
+  "devDependencies": {
+    "@tsconfig/recommended": "^1.0.1",
+    "typescript": "^4.7.2"
+  },
+  "directories": {
+    "test": "tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jup-ag/merkle-distributor-sdk.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jup-ag/merkle-distributor-sdk/issues"
+  },
+  "homepage": "https://github.com/jup-ag/merkle-distributor-sdk#readme"
+}
