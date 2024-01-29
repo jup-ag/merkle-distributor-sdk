@@ -21,7 +21,6 @@ export class MerkleDistributor {
   private mdProgram?: anchor.Program<MerkleDistributorType>;
   private mint: web3.PublicKey;
   private claimProofEndpoint: string;
-  private user?: UserResponse | null;
 
   constructor(
     private provider: anchor.AnchorProvider,
@@ -36,9 +35,6 @@ export class MerkleDistributor {
   }
 
   async getUser(claimant: web3.PublicKey): Promise<UserResponse | null> {
-    if (this.user) {
-      return this.user;
-    }
     try {
       const res = await fetch(`${this.claimProofEndpoint}/${this.mint.toBase58()}/${claimant.toBase58()}`);
 
@@ -46,7 +42,6 @@ export class MerkleDistributor {
         return null;
       }
       const user = await res.json();
-      this.user = user;
       return user;
     } catch (error) {
       return null;
@@ -97,5 +92,32 @@ export class MerkleDistributor {
         })
         .instruction(),
     ];
+  }
+
+  async getClaimStatus(claimant: web3.PublicKey): Promise<{ amount: BN; isClaimed: boolean } | null> {
+    const { mdProgram } = this;
+
+    if (!claimant || !mdProgram) {
+      return null;
+    }
+
+    const user = await this.getUser(claimant);
+
+    if (!user || !user.merkle_tree) {
+      return null;
+    }
+
+    const [claimStatus, _csBump] = deriveClaimStatus(
+      claimant,
+      new web3.PublicKey(user.merkle_tree),
+      mdProgram.programId,
+    );
+
+    const status = await mdProgram.account.claimStatus.fetchNullable(claimStatus);
+
+    return {
+      amount: new BN(user.amount),
+      isClaimed: Boolean(status),
+    };
   }
 }

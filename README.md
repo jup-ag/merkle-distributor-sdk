@@ -47,9 +47,10 @@ const txid = await connection.sendRawTransaction(rawTransaction, {
 });
 ```
 
-3. To get claimable amount of a user
+3. To get claim status of a user
 
 ```ts
-const user = await merkleDistributor.getUser(publicKey);
-const amount = user?.amount;
+const claimStatus = await merkleDistributor.getClaimStatus(publicKey);
+const amount = claimStatus?.amount;
+const isClaimed = claimStatus?.isClaimed;
 ```
