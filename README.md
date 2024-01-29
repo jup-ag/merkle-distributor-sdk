@@ -46,3 +46,10 @@ const txid = await connection.sendRawTransaction(rawTransaction, {
   skipPreflight: true,
 });
 ```
+
+3. To get claimable amount of a user
+
+```ts
+const user = await merkleDistributor.getUser(publicKey);
+const amount = user?.amount;
+```
