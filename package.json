@@ -1,6 +1,6 @@
 {
   "name": "@jup-ag/merkle-distributor-sdk",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "Merkle distributor SDK",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
